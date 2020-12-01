@@ -4,11 +4,17 @@ const logger = require(`morgan`)
 const session = require(`express-session`)
 const cors = require(`cors`)
 const { authenticate } = require(`./util`)
+const store = require(`./passport`)(session)
+
 
 // Here, you should require() your mssqldb, mongoose, and passport setup files that you create
-
+const mongoose = require(`./mongoose.js`)
+const mysqldb = require(`./mssqldb.js`)
+const passport = require("passport");
 // Here, you should require() your routers so you can use() them below
 const userRouter = require(`./routes/user`)
+const taskRouter = require(`./routes/tasks`)
+const authRouter = require(`./routes/auth`)
 
 const app = express()
 
@@ -23,9 +29,22 @@ app.use(express.urlencoded({ extended: false })) // this line says that if there
 app.use(cookieParser()) // This line says that if there are any cookies, that your app should store them in req.cookies
 
 // Here is where you should use the `express-session` middleware
+app.use(session({
+    name: 'it210_session',
+    secret: process.env.GOOGLE_CLIENT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 604800000 },
+    store
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Here is where you should assign your routers to specific routes. Make sure to authenticate() the routes that need authentication.
-app.use(`/api/v1/user`, authenticate, userRouter)
+//app.use(`/api/v1/user`, authenticate, userRouter)
+app.use(`/api/v1/user`, userRouter)
+app.use(`/api/v1/tasks`, taskRouter)
+app.use(`/api/v1/auth`, authRouter)
 
 // Finally, you should add a .get() route to your app for `/signin-google` that uses passport to authenitcate using the google strategy
 
