@@ -67,7 +67,7 @@ router.delete('/:id', async (req, res) => {
 		if(!task) res.status(404).send('There was no task by this id to delete')
 		else res.status(200).send(task)
 
-	} catch{
+	} catch (error) {
 		console.error(error)
 		res.status(500).send("Something went wrong.")
 	}
