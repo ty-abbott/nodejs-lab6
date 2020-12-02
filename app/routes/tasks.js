@@ -52,9 +52,10 @@ router.get('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
 	try {
 		const task = await Task.findByIdAndUpdate(req.params.id, {$set:{Done:req.body.Done}})
+		let replaceBool = !req.body.Done;
 		console.log("here is the task" + task)
 		if(!task) res.status(404).send('There was no task to update with that ID number')
-		else res.status(200).send(task)
+		else res.status(200).send(replaceBool)
 	}
 	catch (error) {
 		console.error(error)
