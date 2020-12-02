@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
 	try {
-		const task = await Task.find({UserId: req.query.UserId})
+		const task = await Task.find()//{UserId: req.query.UserId})
 		if(!task) res.status(404).send('There were no tasks in the database')
 		else res.status(200).send(task)
 	} catch (error) {
