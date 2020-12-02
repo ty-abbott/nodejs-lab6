@@ -42,8 +42,8 @@ app.use(passport.session())
 
 // Here is where you should assign your routers to specific routes. Make sure to authenticate() the routes that need authentication.
 //app.use(`/api/v1/user`, authenticate, userRouter)
-app.use(`/api/v1/user`, userRouter)
-app.use(`/api/v1/tasks`, taskRouter)
+app.use(`/api/v1/user`, authenticate, userRouter)
+app.use(`/api/v1/tasks`, authenticate, taskRouter)
 app.use(`/api/v1/auth`, authRouter)
 
 // Finally, you should add a .get() route to your app for `/signin-google` that uses passport to authenitcate using the google strategy
