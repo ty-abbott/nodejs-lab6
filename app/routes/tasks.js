@@ -53,34 +53,15 @@ router.get('/', async (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-	// try {
-	// 	const newTask = await Item.findById(req.params.id).exec();
-	// 	if (!newTask) res.status(404).send('There was no task to update with that ID number')
-
-	// 	const task = await Task.findByIdAndUpdate(req.params.id, {$set:{Done:req.body.Done}})
-		
-	// 	if(!newTask) res.status(404).send('There was no task to update with that ID number')
-	// 	else res.status(200).send(newTask); 
-	// }
-	// catch (error) {
-	// 	console.error(error)
-	// 	res.status(500).send('Something went wrong.')
-	// }
 	try {
-		console.log(req.params.id)
-		const item = await Item.findById(req.params.id).exec(); // Searching for item
-		/*
-		check if item
-		return res.status(404).send("Not found")
-		*/
-		if (!item) return res.status(404).send("Not found") 
-		console.log(item)
-        item.set(req.body) // Toggline "done" feature
-		const result = await item.save()
-        res.send(result) // Returns status of "done" feature of item
-	} catch (error) {
+		const task = await Task.findByIdAndUpdate(req.params.id, {$set:{Done:req.body.Done}})
+		const newTask = await Item.findById(req.params.id).exec();
+		if(!newTask) res.status(404).send('There was no task to update with that ID number')
+		else res.status(200).send(newTask); 
+	}
+	catch (error) {
 		console.error(error)
-		res.status(500).send(`Something went wrong.`)
+		res.status(404).send('Internal server error')
 	}
 })
 
