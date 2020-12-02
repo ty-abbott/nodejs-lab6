@@ -55,7 +55,7 @@ router.get('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
 	try {
 		console.log("here in the try blocks")
-		const newTask = await Item.findById(req.params.id).exec();
+		const newTask = await Task.findById(req.params.id).exec();
 		console.log("Here is the " + newTask)
 		if(!newTask) res.status(404).send('There was no task to update with that ID number')
 		else {
