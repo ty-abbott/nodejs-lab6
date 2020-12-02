@@ -44,7 +44,7 @@ app.use(passport.session())
 //app.use(`/api/v1/user`, authenticate, userRouter)
 app.use(`/api/v1/user`, authenticate, userRouter)
 app.use(`/api/v1/tasks`, authenticate, taskRouter)
-app.use(`/api/v1/auth`, authRouter)
+app.use(`/api/v1/auth`, authenticate, authRouter)
 
 // Finally, you should add a .get() route to your app for `/signin-google` that uses passport to authenitcate using the google strategy
 
