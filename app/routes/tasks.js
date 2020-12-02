@@ -54,13 +54,13 @@ router.get('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
 	try {
-		console.log("here in the try blocks")
 		const newTask = await Task.findById(req.params.id).exec();
-		console.log("Here is the " + newTask)
 		if(!newTask) res.status(404).send('There was no task to update with that ID number')
 		else {
+			console.log("here we are in the else statement")
 			await Task.findByIdAndUpdate(req.params.id, {$set:{Done:req.body.Done}})
-			res.status(200).send(newTask);
+			const returnTask = await Task.findById(req.params.id).exec();
+			res.status(200).send(returnTask);
 		} 
 	}
 	catch (error) {
