@@ -23,12 +23,15 @@ router.post('/', async (req, res) => {
 	const data = req.body; 
 
 	try {
+
 		const task = new Task ({
 			UserId: req.user.Id,
             Text: data.Text,
             Done: false,
             Date: data.Date
 		})
+		if (task.Date == "") res.status(500).send('there is no date')
+		if(task.Text == "") res.status(500).send('there is no text')
 		const newTask = await task.save()
 		if(!task) res.status(404).send(`Failed to create a task with information ${req.body}`)
 		else res.status(200).send(task)
