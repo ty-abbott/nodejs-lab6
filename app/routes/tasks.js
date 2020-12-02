@@ -54,6 +54,7 @@ router.get('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
 	try {
+		console.log("here in the try blocks")
 		const newTask = await Item.findById(req.params.id).exec();
 		console.log("Here is the " + newTask)
 		if(!newTask) res.status(404).send('There was no task to update with that ID number')
@@ -63,6 +64,7 @@ router.put('/:id', async (req, res) => {
 		} 
 	}
 	catch (error) {
+		console.log("here in the catch phrase")
 		console.error(error)
 		res.status(500).send('Internal server error')
 	}
