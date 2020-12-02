@@ -25,7 +25,7 @@ router.get(`/logout`, async (req,res) => {
     req.logout()
     res.redirect(process.env.CLIENT_ORIGIN)
   })
-  router.get('/', (req, res, next) => {
+  router.get('/', authenticate, (req, res, next) => {
    
     console.log('router.get')
 });
