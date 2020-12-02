@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 
 	try {
 		const task = new Task ({
-			UserId: req.user.id,
+			UserId: req.user.Id,
             Text: data.Text,
             Done: false,
             Date: data.Date
