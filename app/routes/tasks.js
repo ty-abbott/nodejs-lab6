@@ -54,14 +54,17 @@ router.get('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
 	try {
-		const task = await Task.findByIdAndUpdate(req.params.id, {$set:{Done:req.body.Done}})
 		const newTask = await Item.findById(req.params.id).exec();
+		console.log(newTask)
 		if(!newTask) res.status(404).send('There was no task to update with that ID number')
-		else res.status(200).send(newTask); 
+		else {
+			await Task.findByIdAndUpdate(req.params.id, {$set:{Done:req.body.Done}})
+			res.status(200).send(newTask);
+		} 
 	}
 	catch (error) {
 		console.error(error)
-		res.status(404).send('Internal server error')
+		res.status(500).send('Internal server error')
 	}
 })
 
