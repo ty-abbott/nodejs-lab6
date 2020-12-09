@@ -57,14 +57,12 @@ router.put('/:id', async (req, res) => {
 		const newTask = await Task.findById(req.params.id).exec();
 		if(!newTask) res.status(404).send('There was no task to update with that ID number')
 		else {
-			console.log("here we are in the else statement")
 			await Task.findByIdAndUpdate(req.params.id, {$set:{Done:req.body.Done}})
 			const returnTask = await Task.findById(req.params.id).exec();
 			res.status(200).send(returnTask);
 		} 
 	}
 	catch (error) {
-		console.log("here in the catch phrase")
 		console.error(error)
 		res.status(500).send('Internal server error')
 	}

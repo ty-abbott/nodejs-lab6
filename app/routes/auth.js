@@ -6,7 +6,7 @@ const { Store } = require("express-session");
 const app = require("..");
 const { userInfo } = require("os");
 const { error } = require("console");
-const { authenticate } = require("passport");
+const { authenticate } = require("../util");
 
 router.get(`/google`,
     passport.authenticate('google', { scope: [`https://www.googleapis.com/auth/userinfo.email`]})
@@ -26,7 +26,7 @@ router.get(`/logout`, async (req,res) => {
     res.redirect(process.env.CLIENT_ORIGIN)
   })
   router.get('/', authenticate, (req, res, next) => {
-   
-    console.log('router.get')
+    res.send(req.user)
+
 });
 module.exports = router
